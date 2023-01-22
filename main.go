@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/riyan-eng/api-finance/config"
 	"github.com/riyan-eng/api-finance/database"
+	"github.com/riyan-eng/api-finance/router"
 )
 
 func init() {
@@ -23,6 +24,8 @@ func main() {
 		err := c.SendString("help me!!!")
 		return err
 	})
+
+	router.SetupRoutes(app)
 
 	app.Listen(":3000")
 }

@@ -25,6 +25,7 @@ func NewCashRepository(DB *gorm.DB) CashRepository {
 }
 
 func (cash *cashRepository) CashReceipt(cashEntity entities.CashReceipt) error {
+	var err error
 
 	// debet
 	var cashModelDebet models.CashModel = models.CashModel{
@@ -38,7 +39,13 @@ func (cash *cashRepository) CashReceipt(cashEntity entities.CashReceipt) error {
 	queryDebet := fmt.Sprintf(`
 		INSERT INTO finance.general_ledgers (id, coa, description, debet, user_id) VALUES (%v, %v, %v, %v, %v)
 	`, cashModelDebet.ID, cashModelDebet.Code, cashModelDebet.Description, cashModelDebet.Amount, cashModelDebet.UserID)
-	cash.DB.Exec(queryDebet)
+	err = cash.DB.Exec(queryDebet).Error
+	fmt.Println("--- repository ---")
+	fmt.Println(err)
+	fmt.Println("--- repository ---")
+	if err != nil {
+		return err
+	}
 
 	// credit
 	var cashModelCredit models.CashModel = models.CashModel{
@@ -52,7 +59,13 @@ func (cash *cashRepository) CashReceipt(cashEntity entities.CashReceipt) error {
 	queryCredit := fmt.Sprintf(`
 		INSERT INTO finance.general_ledgers (id, coa, description, credit, user_id) VALUES (%v, %v, %v, %v, %v)
 	`, cashModelCredit.ID, cashModelCredit.Code, cashModelCredit.Description, cashModelCredit.Amount, cashModelCredit.UserID)
-	cash.DB.Exec(queryCredit)
+	err = cash.DB.Exec(queryCredit).Error
+	fmt.Println("--- repository ---")
+	fmt.Println(err)
+	fmt.Println("--- repository ---")
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

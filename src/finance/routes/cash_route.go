@@ -8,19 +8,11 @@ import (
 	"github.com/riyan-eng/api-finance/src/finance/services"
 )
 
-type RouterStruct struct {
-	fiber.Router
-}
-
-func NewCashRoute(route RouterStruct) RouterStruct {
-	return route
-}
-
-func (r *RouterStruct) CashRoutes(router fiber.Router) {
+func CashRoutes(router fiber.Router) {
 	cashRepository := repositories.NewCashRepository(database.DB)
 	cashService := services.NewCashService(cashRepository)
 	cashController := controllers.NewCashController(cashService)
 
-	cash := r.Group("/cash")
+	cash := router.Group("/cash")
 	cash.Post("/receipt", cashController.CashReceipt)
 }

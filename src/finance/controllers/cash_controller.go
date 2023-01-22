@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/riyan-eng/api-finance/src/finance/controllers/dto"
 	"github.com/riyan-eng/api-finance/src/finance/controllers/validator"
@@ -24,27 +26,34 @@ func NewCashController(cashService services.CashService) CashController {
 
 func (service cashController) CashReceipt(c *fiber.Ctx) error {
 	cashReceiptBody := new(dto.CashReceiptReq)
+	// fmt.Println(cashReceiptBody)
 
 	// parsing body json
-	if err := c.BodyParser(cashReceiptBody); err != nil {
-		c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+	if err := c.BodyParser(&cashReceiptBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"data":    err.Error(),
 			"message": "fail",
 		})
 	}
+	// fmt.Println(cashReceiptBody)
 
 	// validate body json
 	if err := validator.CashReceipt(*cashReceiptBody); err != nil {
-		c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"data":    err,
 			"message": "fail",
 		})
 	}
+	// fmt.Println(cashReceiptBody)
 
 	// comunicate with service
 	err := service.CashService.CashReceipt(*cashReceiptBody)
+	fmt.Println("--- controller ---")
+	fmt.Println(err)
+	fmt.Println("--- controller ---")
+
 	if err != nil {
-		c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"data":    err.Error(),
 			"message": "fail",
 		})

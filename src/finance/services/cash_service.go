@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/riyan-eng/api-finance/config/constant"
 	"github.com/riyan-eng/api-finance/src/finance/controllers/dto"
 	"github.com/riyan-eng/api-finance/src/finance/repositories"
@@ -42,6 +44,9 @@ func (repo cashService) CashReceipt(data dto.CashReceiptReq) error {
 	}
 
 	err := repo.CashRepository.CashReceipt(journal)
+	fmt.Println("--- service ---")
+	fmt.Println(err)
+	fmt.Println("--- service ---")
 	if err != nil {
 		return err
 	}

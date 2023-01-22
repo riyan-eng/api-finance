@@ -2,7 +2,7 @@ package entities
 
 type CashReceipt struct {
 	ID      string
-	UserId  string
+	UserID  string
 	Journal journal
 }
 
@@ -12,7 +12,8 @@ type journal struct {
 }
 
 type transaction struct {
-	Code   string
-	Name   string
-	Amount float64
+	Code        string
+	Name        string
+	Amount      float64
+	Description string
 }

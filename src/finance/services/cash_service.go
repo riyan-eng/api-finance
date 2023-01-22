@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/riyan-eng/api-finance/config/constant"
 	"github.com/riyan-eng/api-finance/src/finance/controllers/dto"
 	"github.com/riyan-eng/api-finance/src/finance/repositories"
@@ -25,20 +26,20 @@ func NewCashService(cashRepository repositories.CashRepository) CashService {
 
 func (repo cashService) CashReceipt(data dto.CashReceiptReq) error {
 	journal := entities.CashReceipt{
-		ID:     "",
-		UserID: "58dd4ecc-8cde-4ca3-b4f0-7451b7b59ce8",
+		ID:          uuid.NewString(),
+		UserID:      "58dd4ecc-8cde-4ca3-b4f0-7451b7b59ce8",
+		Amount:      data.Amount,
+		Description: data.Description,
 		Journal: entities.Journal{
 			Debet: entities.Transaction{
-				Code:        constant.COA_CASH,
-				Name:        "",
-				Amount:      data.Amount,
-				Description: data.Description,
+				Code:   constant.COA_CASH,
+				Name:   "",
+				Amount: data.Amount,
 			},
 			Credit: entities.Transaction{
-				Code:        constant.SALES,
-				Name:        "",
-				Amount:      data.Amount,
-				Description: data.Description,
+				Code:   constant.SALES,
+				Name:   "",
+				Amount: data.Amount,
 			},
 		},
 	}

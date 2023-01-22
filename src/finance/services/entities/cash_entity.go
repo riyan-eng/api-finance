@@ -3,15 +3,15 @@ package entities
 type CashReceipt struct {
 	ID      string
 	UserID  string
-	Journal journal
+	Journal Journal
 }
 
-type journal struct {
-	Debet  transaction
-	Credit transaction
+type Journal struct {
+	Debet  Transaction
+	Credit Transaction
 }
 
-type transaction struct {
+type Transaction struct {
 	Code        string
 	Name        string
 	Amount      float64

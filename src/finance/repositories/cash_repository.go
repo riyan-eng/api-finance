@@ -3,30 +3,22 @@ package repositories
 import (
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/riyan-eng/api-finance/src/finance/repositories/models"
 	"github.com/riyan-eng/api-finance/src/finance/services/entities"
 	"gorm.io/gorm"
 )
 
-type CashRepositoryInterface interface {
+type CashRepository interface {
 	CashReceipt(cashEntity entities.CashReceipt) error
 	// CashPayment()
 }
-
-// var db = database.DB
-
-// func Save(product models.CashModel) models.CashModel {
-// 	db.Exec(`
-// 	INSERT
-// 	`)
-// 	return product
-// }
 
 type cashRepository struct {
 	DB *gorm.DB
 }
 
-func NewCashRepository(DB *gorm.DB) CashRepositoryInterface {
+func NewCashRepository(DB *gorm.DB) CashRepository {
 	return &cashRepository{
 		DB: DB,
 	}
@@ -36,7 +28,7 @@ func (cash *cashRepository) CashReceipt(cashEntity entities.CashReceipt) error {
 
 	// debet
 	var cashModelDebet models.CashModel = models.CashModel{
-		ID:          "lalala",
+		ID:          uuid.NewString(),
 		UserID:      cashEntity.UserID,
 		Code:        cashEntity.Journal.Debet.Code,
 		Name:        cashEntity.Journal.Debet.Name,
@@ -50,7 +42,7 @@ func (cash *cashRepository) CashReceipt(cashEntity entities.CashReceipt) error {
 
 	// credit
 	var cashModelCredit models.CashModel = models.CashModel{
-		ID:          "lalala",
+		ID:          uuid.NewString(),
 		UserID:      cashEntity.UserID,
 		Code:        cashEntity.Journal.Debet.Code,
 		Name:        cashEntity.Journal.Debet.Name,

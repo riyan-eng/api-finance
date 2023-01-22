@@ -1,22 +1,35 @@
 package database
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type COA struct {
 	gorm.Model
 	ID     string `gorm:"primary_key"`
-	Code   string
+	Code   string `gorm:"unique"`
 	Name   string
 	Parent string
 }
 
 type GeneralLedger struct {
 	gorm.Model
+	ID            string `gorm:"primary_key"`
+	TransactionID string
+	Transaction   Transaction `gorm:"foreignKey:TransactionID; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	COA           string
+	COAID         COA `gorm:"foreignKey:COA; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Debet         float64
+	Credit        float64
+	UserID        string
+}
+
+type Transaction struct {
+	gorm.Model
 	ID          string `gorm:"primary_key"`
-	COA         string
-	COAID       COA `gorm:"foreignKey:COA; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	DateTime    time.Time
 	Description string
-	Debet       float64
-	Credit      float64
 	UserID      string
 }

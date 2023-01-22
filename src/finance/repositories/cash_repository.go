@@ -1,20 +1,34 @@
 package repositories
 
 import (
-	"github.com/riyan-eng/api-finance/database"
-	"github.com/riyan-eng/api-finance/src/finance/repositories/models"
+	"github.com/riyan-eng/api-finance/src/finance/services/entities"
+	"gorm.io/gorm"
 )
 
-// type CashRepositoryInterface struct{
-// 	InsertOne()
-// 	Sum()
+type CashRepositoryInterface interface {
+	CashReceipt(cashEntity entities.CashReceipt)
+	// CashPayment()
+}
+
+// var db = database.DB
+
+// func Save(product models.CashModel) models.CashModel {
+// 	db.Exec(`
+// 	INSERT
+// 	`)
+// 	return product
 // }
 
-var db = database.DB
+type cashRepository struct {
+	DB *gorm.DB
+}
 
-func Save(product models.CashModel) models.CashModel {
-	db.Exec(`
-	INSERT 
-	`)
-	return product
+func NewCashRepository(DB *gorm.DB) CashRepositoryInterface {
+	return &cashRepository{
+		DB: DB,
+	}
+}
+
+func (cash *cashRepository) CashReceipt(cashEntity entities.CashReceipt) {
+	// cash.DB.Raw("").Scan()
 }

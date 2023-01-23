@@ -57,3 +57,33 @@ func Sales(sales dto.SalesReq) []*ErrorResponse {
 	}
 	return errors
 }
+
+func Purchase(purchase dto.PurchaseReq) []*ErrorResponse {
+	var errors []*ErrorResponse
+	err := validate.Struct(purchase)
+	if err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			var element ErrorResponse
+			element.FailedField = err.StructNamespace()
+			element.Tag = err.Tag()
+			element.Value = err.Param()
+			errors = append(errors, &element)
+		}
+	}
+	return errors
+}
+
+func General(general dto.GeneralReq) []*ErrorResponse {
+	var errors []*ErrorResponse
+	err := validate.Struct(general)
+	if err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			var element ErrorResponse
+			element.FailedField = err.StructNamespace()
+			element.Tag = err.Tag()
+			element.Value = err.Param()
+			errors = append(errors, &element)
+		}
+	}
+	return errors
+}

@@ -13,6 +13,8 @@ type CashController interface {
 	CashReceipt(c *fiber.Ctx) error
 	CashPayment(c *fiber.Ctx) error
 	Sales(c *fiber.Ctx) error
+	Purchase(c *fiber.Ctx) error
+	General(c *fiber.Ctx) error
 }
 
 type cashController struct {
@@ -122,6 +124,58 @@ func (service *cashController) Sales(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"data":    "success inserted sales",
+		"message": "ok",
+	})
+}
+
+func (service *cashController) Purchase(c *fiber.Ctx) error {
+	purchaseBody := new(dto.PurchaseReq)
+
+	// parse body json
+	if err := c.BodyParser(&purchaseBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
+
+	// validate body json
+	if err := validator.Purchase(*purchaseBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"data":    err,
+			"message": "fail",
+		})
+	}
+
+	// communicate with service
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data":    "success inserted purchase",
+		"message": "ok",
+	})
+}
+
+func (service *cashController) General(c *fiber.Ctx) error {
+	generalBody := new(dto.GeneralReq)
+
+	// parse body json
+	if err := c.BodyParser(&generalBody); err != nil {
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
+
+	// validate body json
+	if err := validator.General(*generalBody); err != nil {
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"data":    err,
+			"message": "fail",
+		})
+	}
+
+	// communicate with service
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data":    "success inserted general",
 		"message": "ok",
 	})
 }

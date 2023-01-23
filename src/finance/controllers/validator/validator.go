@@ -42,3 +42,18 @@ func CashPayment(cashPayment dto.CashPaymentReq) []*ErrorResponse {
 	}
 	return errors
 }
+
+func Sales(sales dto.SalesReq) []*ErrorResponse {
+	var errors []*ErrorResponse
+	err := validate.Struct(sales)
+	if err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			var element ErrorResponse
+			element.FailedField = err.StructNamespace()
+			element.Tag = err.Tag()
+			element.Value = err.Param()
+			errors = append(errors, &element)
+		}
+	}
+	return errors
+}

@@ -46,7 +46,6 @@ func (cash *cashRepository) CashReceipt(cashEntity entities.CashReceipt) error {
 	queryTransaction := fmt.Sprintf(`
 		INSERT INTO finance.transactions(id, date_time, description, amount, user_id) VALUES('%v', current_timestamp,'%v', '%f', '%v')
 	`, cashEntity.ID, cashEntity.Description, cashEntity.Amount, cashEntity.UserID)
-
 	// debet query
 	queryDebet := fmt.Sprintf(`
 		INSERT INTO finance.general_ledgers(id, transaction, coa, debet, user_id) VALUES ('%s','%s', '%s', %f, '%s')

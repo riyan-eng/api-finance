@@ -1,6 +1,7 @@
 package dto
 
 type CashReceiptReq struct {
-	Amount      float64 `validate:"required" json:"amount"`
+	Code        string  `validate:"required" json:"code"`
 	Description string  `validate:"required" json:"description"`
+	Amount      float64 `validate:"required" json:"amount"`
 }

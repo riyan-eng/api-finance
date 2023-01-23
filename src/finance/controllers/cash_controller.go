@@ -60,7 +60,7 @@ func (service cashController) CashReceipt(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"data":    1,
+		"data":    "success inserted cash receipt",
 		"message": "ok",
 	})
 }

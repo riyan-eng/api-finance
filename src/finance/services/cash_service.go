@@ -37,7 +37,7 @@ func (repo cashService) CashReceipt(data dto.CashReceiptReq) error {
 				Amount: data.Amount,
 			},
 			Credit: entities.Transaction{
-				Code:   constant.SALES,
+				Code:   data.Code,
 				Name:   "",
 				Amount: data.Amount,
 			},

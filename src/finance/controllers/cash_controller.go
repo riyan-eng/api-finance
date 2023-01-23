@@ -24,7 +24,7 @@ func NewCashController(cashService services.CashService) CashController {
 	}
 }
 
-func (service cashController) CashReceipt(c *fiber.Ctx) error {
+func (service *cashController) CashReceipt(c *fiber.Ctx) error {
 	cashReceiptBody := new(dto.CashReceiptReq)
 	// fmt.Println(cashReceiptBody)
 
@@ -65,7 +65,7 @@ func (service cashController) CashReceipt(c *fiber.Ctx) error {
 	})
 }
 
-func (service cashController) CashPayment(c *fiber.Ctx) error {
+func (service *cashController) CashPayment(c *fiber.Ctx) error {
 	cashPaymentBody := new(dto.CashPaymentReq)
 
 	// parsing body json
@@ -85,6 +85,12 @@ func (service cashController) CashPayment(c *fiber.Ctx) error {
 	}
 
 	// communicate with service
+	if err := service.CashService.CashPayment(*cashPaymentBody); err != nil {
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"data":    "success inserted cash payment",

@@ -12,6 +12,7 @@ import (
 
 type CashService interface {
 	CashReceipt(data dto.CashReceiptReq) error
+	CashPayment(data dto.CashPaymentReq) error
 }
 
 type cashService struct {
@@ -24,7 +25,7 @@ func NewCashService(cashRepository repositories.CashRepository) CashService {
 	}
 }
 
-func (repo cashService) CashReceipt(data dto.CashReceiptReq) error {
+func (repo *cashService) CashReceipt(data dto.CashReceiptReq) error {
 	journal := entities.CashReceipt{
 		ID:          uuid.NewString(),
 		UserID:      "58dd4ecc-8cde-4ca3-b4f0-7451b7b59ce8",
@@ -49,6 +50,31 @@ func (repo cashService) CashReceipt(data dto.CashReceiptReq) error {
 	fmt.Println(err)
 	fmt.Println("--- service ---")
 	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (repo *cashService) CashPayment(data dto.CashPaymentReq) error {
+	journal := entities.CashReceipt{
+		ID:          uuid.NewString(),
+		UserID:      "58dd4ecc-8cde-4ca3-b4f0-7451b7b59ce8",
+		Amount:      data.Amount,
+		Description: data.Description,
+		Journal: entities.Journal{
+			Debet: entities.Transaction{
+				Code:   data.Code,
+				Name:   "",
+				Amount: data.Amount,
+			},
+			Credit: entities.Transaction{
+				Code:   constant.COA_CASH,
+				Name:   "",
+				Amount: data.Amount,
+			},
+		},
+	}
+	if err := repo.CashRepository.CashPayment(journal); err != nil {
 		return err
 	}
 	return nil

@@ -11,7 +11,7 @@ import (
 
 type CashController interface {
 	CashReceipt(c *fiber.Ctx) error
-	// CashPayment(c *fiber.Ctx) error
+	CashPayment(c *fiber.Ctx) error
 }
 
 type cashController struct {
@@ -61,6 +61,33 @@ func (service cashController) CashReceipt(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"data":    "success inserted cash receipt",
+		"message": "ok",
+	})
+}
+
+func (service cashController) CashPayment(c *fiber.Ctx) error {
+	cashPaymentBody := new(dto.CashPaymentReq)
+
+	// parsing body json
+	if err := c.BodyParser(&cashPaymentBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
+
+	// validate  body json
+	if err := validator.CashPayment(*cashPaymentBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"data":    err,
+			"message": "fail",
+		})
+	}
+
+	// communicate with service
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data":    "success inserted cash payment",
 		"message": "ok",
 	})
 }

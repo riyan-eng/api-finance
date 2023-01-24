@@ -12,6 +12,7 @@ import (
 type CashRepository interface {
 	CashReceipt(cashEntity entities.CashReceipt) error
 	CashPayment(cashEntity entities.CashReceipt) error
+	Sales(cashEntity entities.CashReceipt) error
 }
 
 type cashRepository struct {
@@ -144,4 +145,8 @@ func (cash *cashRepository) CashPayment(cashEntity entities.CashReceipt) error {
 	}
 
 	return tx.Commit().Error
+}
+
+func (cash *cashRepository) Sales(entity entities.CashReceipt) error {
+	return nil
 }

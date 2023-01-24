@@ -154,6 +154,12 @@ func (service *cashController) Purchase(c *fiber.Ctx) error {
 	}
 
 	// communicate with service
+	if err := service.CashService.Purchase(*purchaseBody); err != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"data":    "success inserted purchase",
 		"message": "ok",

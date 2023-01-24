@@ -14,6 +14,7 @@ type CashService interface {
 	CashReceipt(data dto.CashReceiptReq) error
 	CashPayment(data dto.CashPaymentReq) error
 	Sales(data dto.SalesReq) error
+	Purchase(data dto.PurchaseReq) error
 }
 
 type cashService struct {
@@ -96,6 +97,29 @@ func (repo *cashService) Sales(data dto.SalesReq) error {
 	}
 
 	if err := repo.CashRepository.Sales(journal); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (repo *cashService) Purchase(data dto.PurchaseReq) error {
+	journal := entities.CashReceipt{
+		ID:          uuid.NewString(),
+		UserID:      "58dd4ecc-8cde-4ca3-b4f0-7451b7b59ce8",
+		Amount:      data.Amount,
+		Description: data.Description,
+		Journal: entities.Journal{
+			Debet: entities.Transaction{
+				Code:   constant.COA_PURCHASE,
+				Amount: data.Amount,
+			},
+			Credit: entities.Transaction{
+				Code:   constant.COA_ACCOUNT_PAYABLE,
+				Amount: data.Amount,
+			},
+		},
+	}
+	if err := repo.CashRepository.Purchase(journal); err != nil {
 		return err
 	}
 	return nil

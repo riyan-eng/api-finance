@@ -17,4 +17,5 @@ func CashRoutes(router fiber.Router) {
 	cash.Post("/receipt", cashController.CashReceipt)
 	cash.Post("/payment", cashController.CashPayment)
 	cash.Post("/sales", cashController.Sales)
+	cash.Post("/purchase", cashController.Purchase)
 }

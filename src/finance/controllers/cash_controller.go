@@ -171,7 +171,7 @@ func (service *cashController) General(c *fiber.Ctx) error {
 
 	// parse body json
 	if err := c.BodyParser(&generalBody); err != nil {
-		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"data":    err.Error(),
 			"message": "fail",
 		})
@@ -179,13 +179,19 @@ func (service *cashController) General(c *fiber.Ctx) error {
 
 	// validate body json
 	if err := validator.General(*generalBody); err != nil {
-		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"data":    err,
 			"message": "fail",
 		})
 	}
 
 	// communicate with service
+	if err := service.CashService.General(*generalBody); err != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"data":    "success inserted general",
 		"message": "ok",

@@ -121,6 +121,12 @@ func (service *cashController) Sales(c *fiber.Ctx) error {
 	}
 
 	// communicate with service
+	if err := service.CashService.Sales(*salesBody); err != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"data":    "success inserted sales",

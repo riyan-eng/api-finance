@@ -71,7 +71,7 @@ type SalesJournal struct {
 	UserID        string
 }
 
-type PaymentJournal struct {
+type PurchaseJournal struct {
 	gorm.Model
 	ID            string `gorm:"primary_key"`
 	Transaction   string

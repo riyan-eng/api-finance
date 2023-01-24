@@ -39,6 +39,6 @@ func ConnectDb() {
 	fmt.Println("Connection Opened to Database")
 
 	// migrate database
-	DB.AutoMigrate(&COA{}, &GeneralLedger{}, &Transaction{}, &CashReceiptJournal{}, &CashPaymentJuornal{})
+	DB.AutoMigrate(&COA{}, &GeneralLedger{}, &Transaction{}, &CashReceiptJournal{}, &CashPaymentJuornal{}, &SalesJournal{}, &PurchaseJournal{}, &AdjustmentJournalEntry{})
 	fmt.Println("Database migrated")
 }

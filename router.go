@@ -1,9 +1,9 @@
-package router
+package main
 
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/riyan-eng/api-finance/src/finance/routes"
+	"github.com/riyan-eng/api-finance/module/finance/routes"
 )
 
 func SetupRoutes(app *fiber.App) {

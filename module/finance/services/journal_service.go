@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/riyan-eng/api-finance/src/finance/repositories"
-	"github.com/riyan-eng/api-finance/src/finance/services/entities"
+	"github.com/riyan-eng/api-finance/module/finance/repositories"
+	"github.com/riyan-eng/api-finance/module/finance/services/entities"
 )
 
 type JournalService interface {

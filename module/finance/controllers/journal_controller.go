@@ -3,10 +3,10 @@ package controllers
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
-	"github.com/riyan-eng/api-finance/config/constant"
-	"github.com/riyan-eng/api-finance/src/finance/controllers/dto"
-	"github.com/riyan-eng/api-finance/src/finance/services"
-	"github.com/riyan-eng/api-finance/src/finance/services/entities"
+	"github.com/riyan-eng/api-finance/constant"
+	"github.com/riyan-eng/api-finance/module/finance/controllers/dto"
+	"github.com/riyan-eng/api-finance/module/finance/services"
+	"github.com/riyan-eng/api-finance/module/finance/services/entities"
 	"github.com/riyan-eng/api-finance/util"
 )
 

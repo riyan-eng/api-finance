@@ -3,9 +3,9 @@ package routes
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/riyan-eng/api-finance/config"
-	"github.com/riyan-eng/api-finance/src/finance/controllers"
-	"github.com/riyan-eng/api-finance/src/finance/repositories"
-	"github.com/riyan-eng/api-finance/src/finance/services"
+	"github.com/riyan-eng/api-finance/module/finance/controllers"
+	"github.com/riyan-eng/api-finance/module/finance/repositories"
+	"github.com/riyan-eng/api-finance/module/finance/services"
 )
 
 func JournalRoutes(router fiber.Router) {

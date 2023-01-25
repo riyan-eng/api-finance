@@ -5,7 +5,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/riyan-eng/api-finance/config"
-	"github.com/riyan-eng/api-finance/router"
 )
 
 func init() {
@@ -24,7 +23,7 @@ func main() {
 		return err
 	})
 
-	router.SetupRoutes(app)
+	SetupRoutes(app)
 
 	app.Listen(":3000")
 }

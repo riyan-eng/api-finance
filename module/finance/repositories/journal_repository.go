@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/riyan-eng/api-finance/src/finance/repositories/models"
-	"github.com/riyan-eng/api-finance/src/finance/services/entities"
+	"github.com/riyan-eng/api-finance/module/finance/repositories/models"
+	"github.com/riyan-eng/api-finance/module/finance/services/entities"
 	"gorm.io/gorm"
 )
 

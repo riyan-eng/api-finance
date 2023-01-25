@@ -5,9 +5,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/riyan-eng/api-finance/config/constant"
 	"github.com/riyan-eng/api-finance/src/finance/controllers/dto"
-	"github.com/riyan-eng/api-finance/src/finance/controllers/validator"
 	"github.com/riyan-eng/api-finance/src/finance/services"
 	"github.com/riyan-eng/api-finance/src/finance/services/entities"
+	"github.com/riyan-eng/api-finance/util"
 )
 
 type JournalController interface {
@@ -40,7 +40,7 @@ func (jS *journalService) CashReceipt(c *fiber.Ctx) error {
 	}
 
 	// validate body json
-	if err := validator.CashReceipt(*cashReceiptBody); err != nil {
+	if err := util.Validate(*cashReceiptBody); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"data":    err,
 			"message": "fail",
@@ -91,7 +91,7 @@ func (jS *journalService) CashPayment(c *fiber.Ctx) error {
 	}
 
 	// validate  body json
-	if err := validator.CashPayment(*cashPaymentBody); err != nil {
+	if err := util.Validate(*cashPaymentBody); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"data":    err,
 			"message": "fail",
@@ -142,7 +142,7 @@ func (jS *journalService) Sales(c *fiber.Ctx) error {
 	}
 
 	// validate body json
-	if err := validator.Sales(*salesBody); err != nil {
+	if err := util.Validate(*salesBody); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"data":    err,
 			"message": "fail",
@@ -193,7 +193,7 @@ func (jS *journalService) Purchase(c *fiber.Ctx) error {
 	}
 
 	// validate body json
-	if err := validator.Purchase(*purchaseBody); err != nil {
+	if err := util.Validate(*purchaseBody); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"data":    err,
 			"message": "fail",
@@ -243,7 +243,7 @@ func (jS *journalService) General(c *fiber.Ctx) error {
 	}
 
 	// validate body json
-	if err := validator.General(*generalBody); err != nil {
+	if err := util.Validate(*generalBody); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"data":    err,
 			"message": "fail",

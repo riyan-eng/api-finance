@@ -2,14 +2,14 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/riyan-eng/api-finance/database"
+	"github.com/riyan-eng/api-finance/config"
 	"github.com/riyan-eng/api-finance/src/finance/controllers"
 	"github.com/riyan-eng/api-finance/src/finance/repositories"
 	"github.com/riyan-eng/api-finance/src/finance/services"
 )
 
 func JournalRoutes(router fiber.Router) {
-	journalRepository := repositories.NewJournalRepository(database.DB)
+	journalRepository := repositories.NewJournalRepository(config.DB)
 	journalService := services.NewJournalService(journalRepository)
 	journalController := controllers.NewJournalController(journalService)
 

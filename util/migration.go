@@ -1,4 +1,4 @@
-package database
+package util
 
 import (
 	"time"

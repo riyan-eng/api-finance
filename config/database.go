@@ -1,9 +1,10 @@
-package database
+package config
 
 import (
 	"fmt"
 	"os"
 
+	"github.com/riyan-eng/api-finance/util"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -39,6 +40,6 @@ func ConnectDb() {
 	fmt.Println("Connection Opened to Database")
 
 	// migrate database
-	DB.AutoMigrate(&COA{}, &GeneralLedger{}, &Transaction{}, &CashReceiptJournal{}, &CashPaymentJournal{}, &SalesJournal{}, &PurchaseJournal{}, &AdjustmentJournalEntry{})
+	DB.AutoMigrate(util.COA{}, util.GeneralLedger{}, util.Transaction{}, util.CashReceiptJournal{}, util.CashPaymentJournal{}, util.SalesJournal{}, util.PurchaseJournal{}, util.AdjustmentJournalEntry{})
 	fmt.Println("Database migrated")
 }

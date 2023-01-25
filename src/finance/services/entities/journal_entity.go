@@ -1,14 +1,14 @@
 package entities
 
-type CashReceipt struct {
+type JournalEntity struct {
 	ID          string
 	UserID      string
-	Journal     Journal
+	Position    Position
 	Amount      float64
 	Description string
 }
 
-type Journal struct {
+type Position struct {
 	Debet  Transaction
 	Credit Transaction
 }

@@ -8,5 +8,5 @@ import (
 
 func SetupRoutes(app *fiber.App) {
 	api := app.Group("/api", logger.New())
-	routes.CashRoutes(api)
+	routes.JournalRoutes(api)
 }

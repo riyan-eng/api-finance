@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-type CashModel struct {
+type JournalModel struct {
 	ID          string
 	UserID      string
 	CreatedAt   time.Time

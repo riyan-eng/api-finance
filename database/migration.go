@@ -47,7 +47,7 @@ type CashReceiptJournal struct {
 	UserID        string
 }
 
-type CashPaymentJuornal struct {
+type CashPaymentJournal struct {
 	gorm.Model
 	ID            string `gorm:"primary_key"`
 	Transaction   string

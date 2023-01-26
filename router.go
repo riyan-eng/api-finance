@@ -10,4 +10,5 @@ func SetupRoutes(app *fiber.App) {
 	api := app.Group("/api", logger.New())
 	routes.JournalRoutes(api)
 	routes.NeracaRoutes(api)
+	routes.StatementRoute(api)
 }

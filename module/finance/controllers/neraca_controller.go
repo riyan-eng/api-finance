@@ -64,7 +64,40 @@ func (service *neracaService) TrialBalance(c *fiber.Ctx) error {
 }
 
 func (service *neracaService) TrialBalanceAfterAdjustment(c *fiber.Ctx) error {
-	return nil
+	trialBalanceBody := new(dto.TrialBalanceReq)
+
+	// parsing query
+	if err := c.QueryParser(trialBalanceBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
+
+	// validate query
+	if err := util.Validate(trialBalanceBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"data":    err,
+			"message": "fail",
+		})
+	}
+
+	fmt.Println(trialBalanceBody)
+
+	lala := entities.NeracaEntity{}
+	neracas, err := service.NeracaService.TrialBalanceAfterAdjustment(lala)
+
+	if err != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data":    neracas,
+		"message": "ok",
+	})
 }
 
 func (service *neracaService) BalanceSheet(c *fiber.Ctx) error {

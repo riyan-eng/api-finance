@@ -1,8 +1,13 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
+	"github.com/riyan-eng/api-finance/module/finance/controllers/dto"
 	"github.com/riyan-eng/api-finance/module/finance/services"
+	"github.com/riyan-eng/api-finance/module/finance/services/entities"
+	"github.com/riyan-eng/api-finance/util"
 )
 
 type NeracaController interface {
@@ -21,21 +26,47 @@ func NewNeracaController(nC services.NeracaService) NeracaController {
 	}
 }
 
-func (service neracaService) TrialBalance(c *fiber.Ctx) error {
-	// trialBalanceBody:=new(dto.TrialBalanceReq)
+func (service *neracaService) TrialBalance(c *fiber.Ctx) error {
+	trialBalanceBody := new(dto.TrialBalanceReq)
 
-	// parsing body json
+	// parsing query
+	if err := c.QueryParser(trialBalanceBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
+
+	// validate query
+	if err := util.Validate(trialBalanceBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"data":    err,
+			"message": "fail",
+		})
+	}
+
+	fmt.Println(trialBalanceBody)
+
+	lala := entities.NeracaEntity{}
+	neracas, err := service.NeracaService.TrialBalance(lala)
+
+	if err != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"data":    1,
+		"data":    neracas,
 		"message": "ok",
 	})
 }
 
-func (service neracaService) TrialBalanceAfterAdjustment(c *fiber.Ctx) error {
+func (service *neracaService) TrialBalanceAfterAdjustment(c *fiber.Ctx) error {
 	return nil
 }
 
-func (service neracaService) BalanceSheet(c *fiber.Ctx) error {
+func (service *neracaService) BalanceSheet(c *fiber.Ctx) error {
 	return nil
 }

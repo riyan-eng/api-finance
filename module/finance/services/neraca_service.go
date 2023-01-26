@@ -6,7 +6,7 @@ import (
 )
 
 type NeracaService interface {
-	TrialBalance(nE entities.NeracaEntity) error
+	TrialBalance(nE entities.NeracaEntity) ([]entities.NeracaEntity, error)
 	TrialBalanceAfterAdjustment(nE entities.NeracaEntity) error
 	BalanceSheet(nE entities.NeracaEntity) error
 }
@@ -21,14 +21,18 @@ func NewNeracaService(nR repositories.NeracaRepository) NeracaService {
 	}
 }
 
-func (repo neracaRepository) TrialBalance(nE entities.NeracaEntity) error {
+func (repo *neracaRepository) TrialBalance(nE entities.NeracaEntity) ([]entities.NeracaEntity, error) {
+	neracas, err := repo.NeracaRepository.TrialBalance(nE)
+	if err != nil {
+		return nil, err
+	}
+	return neracas, nil
+}
+
+func (repo *neracaRepository) TrialBalanceAfterAdjustment(nE entities.NeracaEntity) error {
 	return nil
 }
 
-func (repo neracaRepository) TrialBalanceAfterAdjustment(nE entities.NeracaEntity) error {
-	return nil
-}
-
-func (repo neracaRepository) BalanceSheet(nE entities.NeracaEntity) error {
+func (repo *neracaRepository) BalanceSheet(nE entities.NeracaEntity) error {
 	return nil
 }

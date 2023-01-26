@@ -16,5 +16,4 @@ func NeracaRoutes(router fiber.Router) {
 	neraca := router.Group("/neraca")
 	neraca.Get("/trial_balance", neracaController.TrialBalance)
 	neraca.Get("/trial_balance_adjustment", neracaController.TrialBalanceAfterAdjustment)
-	neraca.Get("/balance_sheet", neracaController.BalanceSheet)
 }

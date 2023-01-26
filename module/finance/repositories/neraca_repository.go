@@ -11,7 +11,6 @@ import (
 type NeracaRepository interface {
 	TrialBalance(nE entities.NeracaEntity) ([]entities.NeracaEntity, error)
 	TrialBalanceAfterAdjustment(nE entities.NeracaEntity) ([]entities.NeracaEntity, error)
-	BalanceSheet(nE entities.NeracaEntity) error
 }
 
 type databaseNeracaRepository struct {
@@ -105,8 +104,4 @@ func (database *databaseNeracaRepository) TrialBalanceAfterAdjustment(nE entitie
 	}
 
 	return neracasEntity, nil
-}
-
-func (database *databaseNeracaRepository) BalanceSheet(nE entities.NeracaEntity) error {
-	return nil
 }

@@ -8,7 +8,6 @@ import (
 type NeracaService interface {
 	TrialBalance(nE entities.NeracaEntity) ([]entities.NeracaEntity, error)
 	TrialBalanceAfterAdjustment(nE entities.NeracaEntity) ([]entities.NeracaEntity, error)
-	BalanceSheet(nE entities.NeracaEntity) error
 }
 
 type neracaRepository struct {
@@ -35,8 +34,4 @@ func (repo *neracaRepository) TrialBalanceAfterAdjustment(nE entities.NeracaEnti
 		return nil, err
 	}
 	return neracas, nil
-}
-
-func (repo *neracaRepository) BalanceSheet(nE entities.NeracaEntity) error {
-	return nil
 }

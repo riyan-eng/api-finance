@@ -13,7 +13,6 @@ import (
 type NeracaController interface {
 	TrialBalance(c *fiber.Ctx) error
 	TrialBalanceAfterAdjustment(c *fiber.Ctx) error
-	BalanceSheet(c *fiber.Ctx) error
 }
 
 type neracaService struct {
@@ -98,8 +97,4 @@ func (service *neracaService) TrialBalanceAfterAdjustment(c *fiber.Ctx) error {
 		"data":    neracas,
 		"message": "ok",
 	})
-}
-
-func (service *neracaService) BalanceSheet(c *fiber.Ctx) error {
-	return nil
 }

@@ -22,7 +22,14 @@ func NewNeracaController(nC services.NeracaService) NeracaController {
 }
 
 func (service neracaService) TrialBalance(c *fiber.Ctx) error {
-	return nil
+	// trialBalanceBody:=new(dto.TrialBalanceReq)
+
+	// parsing body json
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data":    1,
+		"message": "ok",
+	})
 }
 
 func (service neracaService) TrialBalanceAfterAdjustment(c *fiber.Ctx) error {

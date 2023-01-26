@@ -17,17 +17,17 @@ type JournalRepository interface {
 	General(journal entities.JournalEntity) error
 }
 
-type journalRepository struct {
+type databaseJournalRepository struct {
 	DB *gorm.DB
 }
 
-func NewJournalRepository(DB *gorm.DB) JournalRepository {
-	return &journalRepository{
-		DB: DB,
+func NewJournalRepository(db *gorm.DB) JournalRepository {
+	return &databaseJournalRepository{
+		DB: db,
 	}
 }
 
-func (jR *journalRepository) CashReceipt(journal entities.JournalEntity) error {
+func (database *databaseJournalRepository) CashReceipt(journal entities.JournalEntity) error {
 	// debet struct
 	var jurnalDebet models.JournalModel = models.JournalModel{
 		ID:     uuid.NewString(),
@@ -58,7 +58,7 @@ func (jR *journalRepository) CashReceipt(journal entities.JournalEntity) error {
 		INSERT INTO finance.cash_receipt_journals (id, transaction, coa, credit, user_id) VALUES ('%s', '%s', '%s', '%f', '%s')
 	`, journalCredit.ID, journal.ID, journalCredit.Code, journalCredit.Amount, journalCredit.UserID)
 
-	tx := jR.DB.Begin()
+	tx := database.DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()
@@ -88,7 +88,7 @@ func (jR *journalRepository) CashReceipt(journal entities.JournalEntity) error {
 	return tx.Commit().Error
 }
 
-func (jR *journalRepository) CashPayment(journal entities.JournalEntity) error {
+func (database *databaseJournalRepository) CashPayment(journal entities.JournalEntity) error {
 	// debet struct
 	var jurnalDebet models.JournalModel = models.JournalModel{
 		ID:     uuid.NewString(),
@@ -119,7 +119,7 @@ func (jR *journalRepository) CashPayment(journal entities.JournalEntity) error {
 		INSERT INTO finance.cash_payment_journals (id, transaction, coa, credit, user_id) VALUES ('%s', '%s', '%s', '%f', '%s')
 	`, journalCredit.ID, journal.ID, journalCredit.Code, journalCredit.Amount, journalCredit.UserID)
 
-	tx := jR.DB.Begin()
+	tx := database.DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()
@@ -149,7 +149,7 @@ func (jR *journalRepository) CashPayment(journal entities.JournalEntity) error {
 	return tx.Commit().Error
 }
 
-func (jR *journalRepository) Sales(journal entities.JournalEntity) error {
+func (database *databaseJournalRepository) Sales(journal entities.JournalEntity) error {
 	// debet struct
 	var jurnalDebet models.JournalModel = models.JournalModel{
 		ID:     uuid.NewString(),
@@ -179,7 +179,7 @@ func (jR *journalRepository) Sales(journal entities.JournalEntity) error {
 		INSERT INTO finance.sales_journals (id, transaction, coa, credit, user_id) VALUES ('%s', '%s', '%s', '%f', '%s')
 	`, journalCredit.ID, journal.ID, journalCredit.Code, journalCredit.Amount, journalCredit.UserID)
 
-	tx := jR.DB.Begin()
+	tx := database.DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()
@@ -211,7 +211,7 @@ func (jR *journalRepository) Sales(journal entities.JournalEntity) error {
 	return tx.Commit().Error
 }
 
-func (jR *journalRepository) Purchase(journal entities.JournalEntity) error {
+func (database *databaseJournalRepository) Purchase(journal entities.JournalEntity) error {
 	// debet struct
 	var jurnalDebet models.JournalModel = models.JournalModel{
 		ID:     uuid.NewString(),
@@ -241,7 +241,7 @@ func (jR *journalRepository) Purchase(journal entities.JournalEntity) error {
 		INSERT INTO finance.purchase_journals (id, transaction, coa, credit, user_id) VALUES ('%s', '%s', '%s', '%f', '%s')
 	`, journalCredit.ID, journal.ID, journalCredit.Code, journalCredit.Amount, journalCredit.UserID)
 
-	tx := jR.DB.Begin()
+	tx := database.DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()
@@ -273,7 +273,7 @@ func (jR *journalRepository) Purchase(journal entities.JournalEntity) error {
 	return tx.Commit().Error
 }
 
-func (jR *journalRepository) General(journal entities.JournalEntity) error {
+func (database *databaseJournalRepository) General(journal entities.JournalEntity) error {
 	// debet struct
 	var jurnalDebet models.JournalModel = models.JournalModel{
 		ID:     uuid.NewString(),
@@ -303,7 +303,7 @@ func (jR *journalRepository) General(journal entities.JournalEntity) error {
 		INSERT INTO finance.general_ledgers (id, transaction, coa, credit, user_id) VALUES ('%s', '%s', '%s', '%f', '%s')
 	`, journalCredit.ID, journal.ID, journalCredit.Code, journalCredit.Amount, journalCredit.UserID)
 
-	tx := jR.DB.Begin()
+	tx := database.DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()

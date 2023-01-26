@@ -1,7 +1,34 @@
 package services
 
+import (
+	"github.com/riyan-eng/api-finance/module/finance/repositories"
+	"github.com/riyan-eng/api-finance/module/finance/services/entities"
+)
+
 type NeracaService interface {
-	TrialBalance()
-	TrialBalanceAfterAdjustment()
-	BalanceSheet()
+	TrialBalance(nE entities.NeracaEntity) error
+	TrialBalanceAfterAdjustment(nE entities.NeracaEntity) error
+	BalanceSheet(nE entities.NeracaEntity) error
+}
+
+type neracaRepository struct {
+	NeracaRepository repositories.NeracaRepository
+}
+
+func NewNeracaService(nR repositories.NeracaRepository) NeracaService {
+	return &neracaRepository{
+		NeracaRepository: nR,
+	}
+}
+
+func (repo neracaRepository) TrialBalance(nE entities.NeracaEntity) error {
+	return nil
+}
+
+func (repo neracaRepository) TrialBalanceAfterAdjustment(nE entities.NeracaEntity) error {
+	return nil
+}
+
+func (repo neracaRepository) BalanceSheet(nE entities.NeracaEntity) error {
+	return nil
 }

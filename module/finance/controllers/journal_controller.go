@@ -28,7 +28,7 @@ func NewJournalController(jS services.JournalService) JournalController {
 	}
 }
 
-func (jS *journalService) CashReceipt(c *fiber.Ctx) error {
+func (service *journalService) CashReceipt(c *fiber.Ctx) error {
 	cashReceiptBody := new(dto.CashReceiptReq)
 
 	// parsing body json
@@ -66,7 +66,7 @@ func (jS *journalService) CashReceipt(c *fiber.Ctx) error {
 	}
 
 	// comunicate with service
-	if err := jS.JournalService.CashReceipt(journal); err != nil {
+	if err := service.JournalService.CashReceipt(journal); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"data":    err.Error(),
 			"message": "fail",
@@ -79,7 +79,7 @@ func (jS *journalService) CashReceipt(c *fiber.Ctx) error {
 	})
 }
 
-func (jS *journalService) CashPayment(c *fiber.Ctx) error {
+func (service *journalService) CashPayment(c *fiber.Ctx) error {
 	cashPaymentBody := new(dto.CashPaymentReq)
 
 	// parsing body json
@@ -117,7 +117,7 @@ func (jS *journalService) CashPayment(c *fiber.Ctx) error {
 	}
 
 	// communicate with service
-	if err := jS.JournalService.CashPayment(journal); err != nil {
+	if err := service.JournalService.CashPayment(journal); err != nil {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"data":    err.Error(),
 			"message": "fail",
@@ -181,7 +181,7 @@ func (jS *journalService) Sales(c *fiber.Ctx) error {
 	})
 }
 
-func (jS *journalService) Purchase(c *fiber.Ctx) error {
+func (service *journalService) Purchase(c *fiber.Ctx) error {
 	purchaseBody := new(dto.PurchaseReq)
 
 	// parse body json
@@ -219,7 +219,7 @@ func (jS *journalService) Purchase(c *fiber.Ctx) error {
 	}
 
 	// communicate with service
-	if err := jS.JournalService.Purchase(journal); err != nil {
+	if err := service.JournalService.Purchase(journal); err != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
 			"data":    err.Error(),
 			"message": "fail",
@@ -231,7 +231,7 @@ func (jS *journalService) Purchase(c *fiber.Ctx) error {
 	})
 }
 
-func (jS *journalService) General(c *fiber.Ctx) error {
+func (service *journalService) General(c *fiber.Ctx) error {
 	generalBody := new(dto.GeneralReq)
 
 	// parse body json
@@ -269,7 +269,7 @@ func (jS *journalService) General(c *fiber.Ctx) error {
 	}
 
 	// communicate with service
-	if err := jS.JournalService.General(journal); err != nil {
+	if err := service.JournalService.General(journal); err != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
 			"data":    err.Error(),
 			"message": "fail",

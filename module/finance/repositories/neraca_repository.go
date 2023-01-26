@@ -1,11 +1,14 @@
 package repositories
 
-import "gorm.io/gorm"
+import (
+	"github.com/riyan-eng/api-finance/module/finance/services/entities"
+	"gorm.io/gorm"
+)
 
 type NeracaRepository interface {
-	TrialBalance()
-	TrialBalanceAfterAdjustment()
-	BalanceSheet()
+	TrialBalance(nE entities.NeracaEntity) error
+	TrialBalanceAfterAdjustment(nE entities.NeracaEntity) error
+	BalanceSheet(nE entities.NeracaEntity) error
 }
 
 type database struct {
@@ -18,14 +21,14 @@ func NewNeracaRepository(DB *gorm.DB) NeracaRepository {
 	}
 }
 
-func (database database) TrialBalance() {
-
+func (db database) TrialBalance(nE entities.NeracaEntity) error {
+	return nil
 }
 
-func (database database) TrialBalanceAfterAdjustment() {
-
+func (db database) TrialBalanceAfterAdjustment(nE entities.NeracaEntity) error {
+	return nil
 }
 
-func (database database) BalanceSheet() {
-
+func (db database) BalanceSheet(nE entities.NeracaEntity) error {
+	return nil
 }

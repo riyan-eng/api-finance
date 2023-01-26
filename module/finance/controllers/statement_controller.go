@@ -23,17 +23,29 @@ func NewStatementController(sS services.StatementService) StatementController {
 }
 
 func (service *statementService) IncomeStatement(c *fiber.Ctx) error {
-	return nil
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data":    1,
+		"message": "ok",
+	})
 }
 
 func (service *statementService) CapitalStatement(c *fiber.Ctx) error {
-	return nil
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data":    1,
+		"message": "ok",
+	})
 }
 
 func (service *statementService) BalanceSheet(c *fiber.Ctx) error {
-	return nil
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data":    1,
+		"message": "ok",
+	})
 }
 
 func (service *statementService) CashFlow(c *fiber.Ctx) error {
-	return nil
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data":    1,
+		"message": "ok",
+	})
 }

@@ -8,7 +8,7 @@ import (
 
 type StatementRepository interface {
 	IncomeStatement() (entities.LabaRugi, error)
-	CapitalStatement() error
+	CapitalStatement() (entities.PerubahanModal, error)
 	BalanceSheet() error
 	CashFlow() error
 }
@@ -87,8 +87,17 @@ func (database *databaseStatementRepository) IncomeStatement() (entities.LabaRug
 	return entityLabaRugi, nil
 }
 
-func (database *databaseStatementRepository) CapitalStatement() error {
-	return nil
+func (database *databaseStatementRepository) CapitalStatement() (entities.PerubahanModal, error) {
+	modelPerubahanModal := models.PerubahanModal{
+		ModalAwal: 30000000,
+		Prive:     1200000,
+	}
+
+	entityPerubahanModal := entities.PerubahanModal{
+		ModalAwal: modelPerubahanModal.ModalAwal,
+		Prive:     modelPerubahanModal.Prive,
+	}
+	return entityPerubahanModal, nil
 }
 
 func (database *databaseStatementRepository) BalanceSheet() error {

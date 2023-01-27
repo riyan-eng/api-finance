@@ -43,3 +43,10 @@ type LabaRugiRes struct {
 	PajakPenghasilan       float64                `json:"pajak_penghasilan"`
 	LabaBersihSetelahPajak float64                `json:"laba_bersih_setelah_pajak"`
 }
+
+type PerubahanModalRes struct {
+	ModalAwal  float64 `json:"modal_awal"`
+	LabaRugi   float64 `json:"laba_rugi"`
+	Prive      float64 `json:"prive"`
+	ModalAkhir float64 `json:"modal_akhir"`
+}

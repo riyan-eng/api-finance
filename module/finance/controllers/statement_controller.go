@@ -72,8 +72,22 @@ func (service *statementService) IncomeStatement(c *fiber.Ctx) error {
 }
 
 func (service *statementService) CapitalStatement(c *fiber.Ctx) error {
+	entityPerubahanModal, err := service.Service.CapitalStatement()
+	if err != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
+
+	perubahanModalRes := dto.PerubahanModalRes{
+		ModalAwal:  entityPerubahanModal.ModalAwal,
+		LabaRugi:   entityPerubahanModal.LabaRugi,
+		Prive:      entityPerubahanModal.Prive,
+		ModalAkhir: entityPerubahanModal.ModalAkhir,
+	}
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"data":    1,
+		"data":    perubahanModalRes,
 		"message": "ok",
 	})
 }

@@ -18,3 +18,8 @@ type LabaRugi struct {
 	PajakPenghasilan         int16
 	LabaBersihSetelahPajak   float64
 }
+
+type PerubahanModal struct {
+	ModalAwal float64
+	Prive     float64
+}

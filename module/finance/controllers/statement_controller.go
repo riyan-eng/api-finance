@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/riyan-eng/api-finance/module/finance/controllers/dto"
 	"github.com/riyan-eng/api-finance/module/finance/services"
 )
 
@@ -23,8 +24,9 @@ func NewStatementController(sS services.StatementService) StatementController {
 }
 
 func (service *statementService) IncomeStatement(c *fiber.Ctx) error {
+	incomeStatement := new(dto.LabaRugi)
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"data":    1,
+		"data":    incomeStatement,
 		"message": "ok",
 	})
 }

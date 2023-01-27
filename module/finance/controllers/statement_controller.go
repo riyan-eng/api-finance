@@ -24,9 +24,49 @@ func NewStatementController(sS services.StatementService) StatementController {
 }
 
 func (service *statementService) IncomeStatement(c *fiber.Ctx) error {
-	incomeStatement := new(dto.LabaRugi)
+	entityIncomeStatement, err := service.Service.IncomeStatement()
+	if err != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
+
+	incomeStatementRes := dto.LabaRugiRes{
+		LabaRugiOperasional: dto.LabaRugiOperasional{
+			Penjualan: dto.Penjualan{
+				Penjualan:         entityIncomeStatement.LabaRugiOperasional.Penjualan.Penjualan,
+				ReturPenjualan:    entityIncomeStatement.LabaRugiOperasional.Penjualan.ReturPenjualan,
+				PotonganPenjualan: entityIncomeStatement.LabaRugiOperasional.Penjualan.PotonganPenjualan,
+				PenjualanBersih:   entityIncomeStatement.LabaRugiOperasional.Penjualan.PenjualanBersih,
+			},
+			HPP: dto.HPP{
+				PersediaanAwal: entityIncomeStatement.LabaRugiOperasional.HPP.PersediaanAwal,
+				Pembelian: dto.Pembelian{
+					Pembelian:            entityIncomeStatement.LabaRugiOperasional.HPP.Pembelian.Pembelian,
+					BebanAngkutPembelian: entityIncomeStatement.LabaRugiOperasional.HPP.Pembelian.BebanAngkutPembelian,
+					ReturPembelian:       entityIncomeStatement.LabaRugiOperasional.HPP.Pembelian.ReturPembelian,
+					PotonganPembelian:    entityIncomeStatement.LabaRugiOperasional.HPP.Pembelian.PotonganPembelian,
+					PembelianBersih:      entityIncomeStatement.LabaRugiOperasional.HPP.Pembelian.PembelianBersih,
+				},
+				BarangTersedia:  entityIncomeStatement.LabaRugiOperasional.HPP.BarangTersedia,
+				PersediaanAkhir: entityIncomeStatement.LabaRugiOperasional.HPP.PersediaanAkhir,
+				HPP:             entityIncomeStatement.LabaRugiOperasional.HPP.HPP,
+			},
+			BebanOperasional:    entityIncomeStatement.LabaRugiOperasional.BebanOperasional,
+			LabaRugiOperasional: entityIncomeStatement.LabaRugiOperasional.LabaRugiOperasional,
+		},
+		LabaRugiNonOperasional: dto.LabaRugiNonOperasional{
+			PendapatanNonOperasional: entityIncomeStatement.LabaRugiNonOperasional.PendapatanNonOperasional,
+			BebanNonOperasional:      entityIncomeStatement.LabaRugiNonOperasional.BebanNonOperasional,
+			LabaRugiNonOperasional:   entityIncomeStatement.LabaRugiNonOperasional.LabaRugiNonOperasional,
+		},
+		LabaBersihSebelumPajak: entityIncomeStatement.LabaBersihSebelumPajak,
+		PajakPenghasilan:       entityIncomeStatement.PajakPenghasilan,
+		LabaBersihSetelahPajak: entityIncomeStatement.LabaBersihSetelahPajak,
+	}
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"data":    incomeStatement,
+		"data":    incomeStatementRes,
 		"message": "ok",
 	})
 }

@@ -36,10 +36,10 @@ type LabaRugiNonOperasional struct {
 	LabaRugiNonOperasional   float64 `json:"laba_rugi_non_operasional"`
 }
 
-type LabaRugi struct {
+type LabaRugiRes struct {
 	LabaRugiOperasional    LabaRugiOperasional    `json:"laba_rugi_operasional"`
 	LabaRugiNonOperasional LabaRugiNonOperasional `json:"laba_rugi_non_operasional"`
 	LabaBersihSebelumPajak float64                `json:"laba_bersih_sebelum_pajak"`
-	PajakPenghasilan       int16                  `json:"pajak_penghasilan"`
+	PajakPenghasilan       float64                `json:"pajak_penghasilan"`
 	LabaBersihSetelahPajak float64                `json:"laba_bersih_setelah_pajak"`
 }

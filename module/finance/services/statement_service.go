@@ -1,9 +1,12 @@
 package services
 
-import "github.com/riyan-eng/api-finance/module/finance/repositories"
+import (
+	"github.com/riyan-eng/api-finance/module/finance/repositories"
+	"github.com/riyan-eng/api-finance/module/finance/services/entities"
+)
 
 type StatementService interface {
-	IncomeStatement()
+	IncomeStatement() (entities.LabaRugi, error)
 	CapitalStatement()
 	BalanceSheet()
 	CashFlow()
@@ -19,8 +22,12 @@ func NewStatementService(sR repositories.StatementRepository) StatementService {
 	}
 }
 
-func (repo *statementRepository) IncomeStatement() {
-
+func (repo *statementRepository) IncomeStatement() (entities.LabaRugi, error) {
+	entityIncomeStatement, err := repo.Repo.IncomeStatement()
+	if err != nil {
+		return entities.LabaRugi{}, err
+	}
+	return entityIncomeStatement, nil
 }
 
 func (repo *statementRepository) CapitalStatement() {

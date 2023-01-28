@@ -139,6 +139,7 @@ type AccountReceivableLedger struct {
 	ID     string `gorm:"primary_key"`
 	Shop   string
 	ShopID Shop `gorm:"foreignKey:Shop; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	DK     string
 	Amount float64
 }
 
@@ -147,5 +148,6 @@ type AccountPayableLedger struct {
 	ID     string `gorm:"primary_key"`
 	Shop   string
 	ShopID Shop `gorm:"foreignKey:Shop; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	DK     string
 	Amount float64
 }

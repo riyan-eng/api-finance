@@ -95,3 +95,57 @@ type AdjustmentJournalEntry struct {
 	Credit        float64
 	UserID        string
 }
+
+type LinkedAccount struct {
+	gorm.Model
+	ID          string `gorm:"primary_key"`
+	Code        string `gorm:"unique"`
+	Description string
+	COA         string
+	COAID       COA `gorm:"foreignKey:COA; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+}
+
+type Good struct {
+	gorm.Model
+	ID   string `gorm:"primary_key"`
+	Code string `gorm:"unique"`
+	Name string
+	Desc string
+}
+
+type GoodStock struct {
+	gorm.Model
+	ID       string `gorm:"primary_key"`
+	Good     string
+	GoodID   Good `gorm:"foreignKey:Good; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Quantity uint
+	DK       string
+	Price    float64
+}
+
+type Shop struct {
+	gorm.Model
+	ID          string `gorm:"primary_key"`
+	Code        string `gorm:"unique"`
+	Name        string
+	Address     string
+	PhoneNumber string
+	Email       string
+	CS          string
+}
+
+type AccountReceivableLedger struct {
+	gorm.Model
+	ID     string `gorm:"primary_key"`
+	Shop   string
+	ShopID Shop `gorm:"foreignKey:Shop; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Amount float64
+}
+
+type AccountPayableLedger struct {
+	gorm.Model
+	ID     string `gorm:"primary_key"`
+	Shop   string
+	ShopID Shop `gorm:"foreignKey:Shop; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Amount float64
+}

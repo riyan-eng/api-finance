@@ -11,6 +11,7 @@ import (
 )
 
 type NeracaController interface {
+	ChartOfAccount(c *fiber.Ctx) error
 	TrialBalance(c *fiber.Ctx) error
 	TrialBalanceAfterAdjustment(c *fiber.Ctx) error
 }
@@ -23,6 +24,20 @@ func NewNeracaController(nC services.NeracaService) NeracaController {
 	return &neracaService{
 		NeracaService: nC,
 	}
+}
+
+func (service *neracaService) ChartOfAccount(c *fiber.Ctx) error {
+	data, err := service.NeracaService.ChartOfAccount()
+	if err != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
+			"data":    err.Error(),
+			"message": "fail",
+		})
+	}
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data":    data,
+		"message": "ok",
+	})
 }
 
 func (service *neracaService) TrialBalance(c *fiber.Ctx) error {

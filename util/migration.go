@@ -8,10 +8,11 @@ import (
 
 type COA struct {
 	gorm.Model
-	ID     string `gorm:"primary_key"`
-	Code   string `gorm:"unique"`
-	Name   string
-	Parent string
+	ID         string `gorm:"primary_key"`
+	Code       string `gorm:"unique"`
+	Name       string
+	NameBahasa string
+	Parent     string
 }
 
 type Transaction struct {

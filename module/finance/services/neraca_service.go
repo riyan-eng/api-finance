@@ -6,6 +6,7 @@ import (
 )
 
 type NeracaService interface {
+	ChartOfAccount() ([]entities.COA, error)
 	TrialBalance(nE entities.NeracaEntity) ([]entities.NeracaEntity, error)
 	TrialBalanceAfterAdjustment(nE entities.NeracaEntity) ([]entities.NeracaEntity, error)
 }
@@ -18,6 +19,45 @@ func NewNeracaService(nR repositories.NeracaRepository) NeracaService {
 	return &neracaRepository{
 		NeracaRepository: nR,
 	}
+}
+
+func (repo *neracaRepository) ChartOfAccount() ([]entities.COA, error) {
+	var data []entities.COA
+	coaParents, err := repo.NeracaRepository.ChartOfAccountParent()
+	if err != nil {
+		return data, nil
+	}
+	// fmt.Println(coaParent)
+	coaChilds, err := repo.NeracaRepository.ChartOfAccountChild()
+	if err != nil {
+		return data, nil
+	}
+	// fmt.Println(coaChild)
+
+	for _, parent := range coaParents {
+		coaParent := entities.COA{
+			Code: parent.Code,
+			Name: parent.Name,
+		}
+		// fmt.Println(parent)
+		var newCoaChilds []entities.COAChild
+		for _, child := range coaChilds {
+			if parent.Code == child.Parent {
+				// fmt.Println(child)
+				coaChild := entities.COAChild{
+					Code:       child.Code,
+					Name:       child.Name,
+					NameBahasa: child.NameBahasa,
+				}
+				newCoaChilds = append(newCoaChilds, coaChild)
+
+			}
+		}
+		coaParent.Child = newCoaChilds
+		data = append(data, coaParent)
+	}
+	// fmt.Println(data)
+	return data, nil
 }
 
 func (repo *neracaRepository) TrialBalance(nE entities.NeracaEntity) ([]entities.NeracaEntity, error) {

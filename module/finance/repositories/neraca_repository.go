@@ -9,6 +9,8 @@ import (
 )
 
 type NeracaRepository interface {
+	ChartOfAccountParent() ([]models.ChartOfAccountParentModel, error)
+	ChartOfAccountChild() ([]models.ChartOfAccountChildModel, error)
 	TrialBalance(nE entities.NeracaEntity) ([]entities.NeracaEntity, error)
 	TrialBalanceAfterAdjustment(nE entities.NeracaEntity) ([]entities.NeracaEntity, error)
 }
@@ -21,6 +23,29 @@ func NewNeracaRepository(DB *gorm.DB) NeracaRepository {
 	return &databaseNeracaRepository{
 		DB: DB,
 	}
+}
+
+func (database *databaseNeracaRepository) ChartOfAccountParent() ([]models.ChartOfAccountParentModel, error) {
+	chartOfAccountParent := new([]models.ChartOfAccountParentModel)
+	query := `
+		select c.code, c.name, c.name_bahasa from finance.coas c where c.parent is null order by c.code asc
+	`
+
+	if err := database.DB.Raw(query).Scan(&chartOfAccountParent).Error; err != nil {
+		return *chartOfAccountParent, err
+	}
+	return *chartOfAccountParent, nil
+}
+
+func (database *databaseNeracaRepository) ChartOfAccountChild() ([]models.ChartOfAccountChildModel, error) {
+	chartOfAccountChild := new([]models.ChartOfAccountChildModel)
+	query := `
+		select c.parent, c.code, c.name, c.name_bahasa from finance.coas c where c.parent is not null order by c.code asc   
+	`
+	if err := database.DB.Raw(query).Scan(&chartOfAccountChild).Error; err != nil {
+		return *chartOfAccountChild, err
+	}
+	return *chartOfAccountChild, nil
 }
 
 func (database *databaseNeracaRepository) TrialBalance(nE entities.NeracaEntity) ([]entities.NeracaEntity, error) {

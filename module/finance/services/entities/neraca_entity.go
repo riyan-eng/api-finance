@@ -7,3 +7,16 @@ type NeracaEntity struct {
 	Credit float64
 	Saldo  float64
 }
+
+type COA struct {
+	Code string
+	Name string
+	// NameBahasa string
+	Child []COAChild
+}
+
+type COAChild struct {
+	Code       string
+	Name       string
+	NameBahasa string
+}

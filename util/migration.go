@@ -116,6 +116,7 @@ type Good struct {
 type GoodStock struct {
 	gorm.Model
 	ID       string `gorm:"primary_key"`
+	DateTime time.Time
 	Good     string
 	GoodID   Good `gorm:"foreignKey:Good; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	Quantity uint
@@ -136,18 +137,20 @@ type Shop struct {
 
 type AccountReceivableLedger struct {
 	gorm.Model
-	ID     string `gorm:"primary_key"`
-	Shop   string
-	ShopID Shop `gorm:"foreignKey:Shop; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	DK     string
-	Amount float64
+	ID       string `gorm:"primary_key"`
+	DateTime time.Time
+	Shop     string
+	ShopID   Shop `gorm:"foreignKey:Shop; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	DK       string
+	Amount   float64
 }
 
 type AccountPayableLedger struct {
 	gorm.Model
-	ID     string `gorm:"primary_key"`
-	Shop   string
-	ShopID Shop `gorm:"foreignKey:Shop; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	DK     string
-	Amount float64
+	ID       string `gorm:"primary_key"`
+	DateTime time.Time
+	Shop     string
+	ShopID   Shop `gorm:"foreignKey:Shop; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	DK       string
+	Amount   float64
 }

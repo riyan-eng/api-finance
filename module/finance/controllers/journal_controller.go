@@ -149,26 +149,28 @@ func (jS *journalService) Sales(c *fiber.Ctx) error {
 		})
 	}
 
-	// convert dto to entity
-	journal := entities.JournalEntity{
-		ID:          uuid.NewString(),
-		UserID:      "58dd4ecc-8cde-4ca3-b4f0-7451b7b59ce8",
-		Amount:      salesBody.Amount,
-		Description: salesBody.Description,
-		Position: entities.Position{
-			Debet: entities.Transaction{
-				Code:   salesBody.Code,
-				Amount: salesBody.Amount,
-			},
-			Credit: entities.Transaction{
-				Code:   constant.COA_SALES,
-				Amount: salesBody.Amount,
-			},
-		},
-	}
+	// fmt.Println(salesBody)
 
+	// convert dto to entity
+	// journal := entities.JournalEntity{
+	// 	ID:          uuid.NewString(),
+	// 	UserID:      "58dd4ecc-8cde-4ca3-b4f0-7451b7b59ce8",
+	// 	Amount:      salesBody.Amount,
+	// 	Description: salesBody.Description,
+	// 	Position: entities.Position{
+	// 		Debet: entities.Transaction{
+	// 			Code:   salesBody.Code,
+	// 			Amount: salesBody.Amount,
+	// 		},
+	// 		Credit: entities.Transaction{
+	// 			Code:   constant.COA_SALES,
+	// 			Amount: salesBody.Amount,
+	// 		},
+	// 	},
+	// }
+	data, err := jS.JournalService.Sales(*salesBody)
 	// communicate with service
-	if err := jS.JournalService.Sales(journal); err != nil {
+	if err != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
 			"data":    err.Error(),
 			"message": "fail",
@@ -176,7 +178,7 @@ func (jS *journalService) Sales(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"data":    "success inserted sales",
+		"data":    data,
 		"message": "ok",
 	})
 }

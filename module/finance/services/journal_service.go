@@ -42,7 +42,7 @@ func (repo *journalRepository) CashPayment(journal entities.JournalEntity) error
 
 func (repo *journalRepository) Sales(sR dto.SalesReq) (dto.SalesRes, error) {
 	// fmt.Println(sR)
-	var quantity = 8
+	var quantity = sR.Quantity
 	var price float64 = 2100000
 	var tax_rate float64 = 11
 	var tax float64

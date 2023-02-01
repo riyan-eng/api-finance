@@ -15,6 +15,7 @@ type JournalRepository interface {
 	Sales(journal entities.JournalEntity) error
 	Purchase(journal entities.JournalEntity) error
 	General(journal entities.JournalEntity) error
+	// GetGoodByCode(string) error
 }
 
 type databaseJournalRepository struct {

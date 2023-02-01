@@ -115,13 +115,17 @@ type Good struct {
 
 type GoodStock struct {
 	gorm.Model
-	ID       string `gorm:"primary_key"`
-	DateTime time.Time
-	Good     string
-	GoodID   Good `gorm:"foreignKey:Good; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	Quantity uint
-	DK       string
-	Price    float64
+	ID            string `gorm:"primary_key"`
+	DateTime      time.Time
+	Good          string
+	GoodID        Good `gorm:"foreignKey:Good; references:Code; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	DK            string
+	Quantity      uint
+	Price         float64
+	Amount        float64
+	SaldoQuantity uint
+	SaldoPrice    float64
+	SaldoAmount   float64
 }
 
 type Shop struct {

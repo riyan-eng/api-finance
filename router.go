@@ -11,4 +11,5 @@ func SetupRoutes(app *fiber.App) {
 	routes.JournalRoutes(api)
 	routes.NeracaRoutes(api)
 	routes.StatementRoute(api)
+	routes.InventoryRoutes(api)
 }
